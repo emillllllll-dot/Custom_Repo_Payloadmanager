@@ -1,18 +1,18 @@
 {
-  "name": "HyperHEN",
+  "name": "HyperHEN Auto-Updating Repository",
   "payloads": [
     {
       "id": "hyperhen",
-      "name": "HyperHEN HYPERHEN_V0_9_4",
-      "filename": "HyperHEN-v0.9.4.elf",
-      "url": "https://github.com/Michele-M-Media/HYPERHEN/releases/download/HYPERHEN_V0_9_4/HyperHEN-v0.9.4.elf",
-      "description": "Offizielles HyperHEN-Release HYPERHEN_V0_9_4. Firmware-Kompatibilität und Installationsreihenfolge vor dem Start in den offiziellen Release-Hinweisen prüfen.",
-      "version": "0.9.4",
-      "last_update": "2026-10-30",
+      "name": "HyperHEN (run updater first)",
+      "filename": "HyperHEN.elf",
+      "url": "https://github.com/Michele-M-Media/HYPERHEN/releases/latest",
+      "description": "Placeholder until the GitHub Actions updater runs. Run the workflow first; the URL must resolve to a direct .elf release asset.",
+      "version": "0.0.0",
+      "last_update": "2000-01-01",
       "category": "HEN / System",
       "author": "Michele-M-Media",
       "source": "https://github.com/Michele-M-Media/HYPERHEN",
-      "details_url": "https://github.com/Michele-M-Media/HYPERHEN/releases/tag/HYPERHEN_V0_9_4"
+      "details_url": "https://github.com/Michele-M-Media/HYPERHEN/releases/latest"
     }
   ]
-}\n
+}
