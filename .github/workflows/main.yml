@@ -15,23 +15,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Update payloads.json from the official latest release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Fetch latest official HyperHEN release and update manifest
         run: |
           python3 - <<'PY'
-          import json, os, re, urllib.request
+          import json
+          import urllib.request
           from datetime import datetime, timezone
 
           api = "https://api.github.com/repos/Michele-M-Media/HYPERHEN/releases/latest"
-          req = urllib.request.Request(
-              api,
-              headers={
-                  "Accept": "application/vnd.github+json",
-                  "X-GitHub-Api-Version": "2022-11-28",
-                  "User-Agent": "HyperHEN-PLDMGR-Custom-Repo"
-              }
-          )
+          req = urllib.request.Request(api, headers={
+              "Accept": "application/vnd.github+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+              "User-Agent": "HyperHEN-PLDMGR-Custom-Repo"
+          })
           with urllib.request.urlopen(req, timeout=30) as response:
               release = json.load(response)
 
@@ -43,51 +39,41 @@ jobs:
               and "bypervisor" not in asset.get("name", "").lower()
           ]
           if not candidates:
-              raise SystemExit(
-                  "No HyperHEN ELF asset found in the latest release. "
-                  "Check the official release asset naming before publishing."
-              )
+              print("Latest release:", release.get("tag_name"))
+              print("Available assets:", [a.get("name") for a in assets])
+              raise SystemExit("No HyperHEN .elf asset found; manifest was not changed.")
 
-          # Prefer the official versioned HyperHEN ELF, not source archives or Bypervisor.
-          asset = sorted(
-              candidates,
-              key=lambda a: (
-                  "hyperhen" in a["name"].lower(),
-                  a.get("size", 0) > 0
-              ),
-              reverse=True
-          )[0]
-
-          version = release.get("tag_name", "").replace("HYPERHEN_V", "").replace("_", ".")
-          version = version.lstrip("vV") or release.get("tag_name", "latest")
+          asset = sorted(candidates, key=lambda a: a.get("size", 0), reverse=True)[0]
           published = release.get("published_at") or datetime.now(timezone.utc).isoformat()
-          date = published[:10]
+          tag = release.get("tag_name", "latest")
+          version = tag.replace("HYPERHEN_V", "").replace("_", ".").lstrip("vV") or tag
 
-          path = "payloads.json"
-          with open(path, "r", encoding="utf-8") as f:
+          with open("payloads.json", "r", encoding="utf-8") as f:
               catalog = json.load(f)
 
           item = next(p for p in catalog["payloads"] if p.get("id") == "hyperhen")
-          item["name"] = f"HyperHEN {release.get('tag_name', version)}"
+          item["name"] = f"HyperHEN {tag}"
           item["filename"] = asset["name"]
           item["url"] = asset["browser_download_url"]
           item["version"] = version
-          item["last_update"] = date
+          item["last_update"] = published[:10]
           item["description"] = (
-              f"Offizielles HyperHEN-Release {release.get('tag_name', version)}. "
-              "Firmware-Kompatibilität und Installationsreihenfolge vor dem Start "
-              "in den offiziellen Release-Hinweisen prüfen."
+              f"Official HyperHEN release {tag}. Check the official release notes "
+              "for exact PS5 firmware compatibility and startup order before use."
           )
-          item["details_url"] = release.get("html_url", "https://github.com/Michele-M-Media/HYPERHEN/releases/latest")
+          item["details_url"] = release.get(
+              "html_url", "https://github.com/Michele-M-Media/HYPERHEN/releases/latest"
+          )
           item["source"] = "https://github.com/Michele-M-Media/HYPERHEN"
 
-          with open(path, "w", encoding="utf-8") as f:
+          with open("payloads.json", "w", encoding="utf-8") as f:
               json.dump(catalog, f, ensure_ascii=False, indent=2)
-              f.write("\\n")
-          print(f"Updated to {item['name']} using asset {asset['name']}")
+              f.write("\n")
+
+          print(f"Manifest updated: {tag} -> {asset['browser_download_url']}")
           PY
 
-      - name: Commit updated catalog if changed
+      - name: Commit manifest only when changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
