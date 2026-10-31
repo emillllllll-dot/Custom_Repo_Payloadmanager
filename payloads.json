@@ -1,0 +1,18 @@
+{
+  "name": "HyperHEN",
+  "payloads": [
+    {
+      "id": "hyperhen",
+      "name": "HyperHEN (Latest Release)",
+      "filename": "HyperHEN.elf",
+      "url": "https://github.com/Michele-M-Media/HYPERHEN/releases/latest",
+      "description": "Wird durch GitHub Actions automatisch auf das neueste offizielle HyperHEN-Release aktualisiert. Die URL und Version in diesem Manifest werden regelmäßig aktualisiert.",
+      "version": "0.0.0",
+      "last_update": "2000-01-01",
+      "category": "HEN / System",
+      "author": "Michele-M-Media",
+      "source": "https://github.com/Michele-M-Media/HYPERHEN",
+      "details_url": "https://github.com/Michele-M-Media/HYPERHEN/releases/latest"
+    }
+  ]
+}
