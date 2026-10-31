@@ -3,16 +3,16 @@
   "payloads": [
     {
       "id": "hyperhen",
-      "name": "HyperHEN (run updater first)",
-      "filename": "HyperHEN.elf",
-      "url": "https://github.com/Michele-M-Media/HYPERHEN/releases/latest",
-      "description": "Placeholder until the GitHub Actions updater runs. Run the workflow first; the URL must resolve to a direct .elf release asset.",
-      "version": "0.0.0",
-      "last_update": "2000-01-01",
+      "name": "HyperHEN HYPERHEN_V0_9_4",
+      "filename": "HyperHEN-v0.9.4.elf",
+      "url": "https://github.com/Michele-M-Media/HYPERHEN/releases/download/HYPERHEN_V0_9_4/HyperHEN-v0.9.4.elf",
+      "description": "Official HyperHEN release HYPERHEN_V0_9_4. Check the official release notes for exact PS5 firmware compatibility and startup order before use.",
+      "version": "0.9.4",
+      "last_update": "2026-10-30",
       "category": "HEN / System",
       "author": "Michele-M-Media",
       "source": "https://github.com/Michele-M-Media/HYPERHEN",
-      "details_url": "https://github.com/Michele-M-Media/HYPERHEN/releases/latest"
+      "details_url": "https://github.com/Michele-M-Media/HYPERHEN/releases/tag/HYPERHEN_V0_9_4"
     }
   ]
 }
