@@ -3,7 +3,7 @@
   "payloads": [
     {
       "id": "hyperhen",
-      "name": "HyperHEN",
+      "name": "HyperHEN HYPERHEN_V0_9_4",
       "filename": "HyperHEN-v0.9.4.elf",
       "url": "https://github.com/Michele-M-Media/HYPERHEN/releases/download/HYPERHEN_V0_9_4/HyperHEN-v0.9.4.elf",
       "description": "Official HyperHEN release HYPERHEN_V0_9_4. Check the official release notes for exact PS5 firmware compatibility and startup order before use.",
